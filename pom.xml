@@ -789,7 +789,7 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
+       <!-- <profile>
             <id>format</id>
             <build>
                 <plugins>
@@ -849,7 +849,7 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
+        </profile>-->
         <profile>
             <id>forbiddenapis</id>
             <activation>
