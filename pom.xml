@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.mwiede</groupId>
+    <groupId>com.jcraft</groupId>
     <artifactId>jsch</artifactId>
     <packaging>jar</packaging>
     <version>0.2.20-SNAPSHOT</version>
@@ -96,7 +96,6 @@
             <groupId>com.kohlschutter.junixsocket</groupId>
             <artifactId>junixsocket-common</artifactId>
             <version>${junixsocket.version}</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.kohlschutter</groupId>
@@ -174,7 +173,6 @@
             <groupId>com.kohlschutter.junixsocket</groupId>
             <artifactId>junixsocket-native-common</artifactId>
             <version>${junixsocket.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -420,6 +418,7 @@
                             Private-Package
                         Bundle-SymbolicName: ${project.groupId}.${project.artifactId}
                         Export-Package: com.jcraft.jsch;-noimport:=true
+                        Require-Bundle: com.sun.jna,com.sun.jna.platform
                         Import-Package: \
                             com.sun.jna*;version="${range;[=0,+)}";resolution:=optional,\
                             org.apache.logging.log4j*;version="${range;[=0,4)}";resolution:=optional,\
@@ -665,6 +664,36 @@
                         <suppressAnnotation>com.jcraft.jsch.annotations.SuppressForbiddenApi</suppressAnnotation>
                     </suppressAnnotations>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.kohlschutter.junixsocket:junixsocket-common</include>
+                                    <include>com.kohlschutter.junixsocket:junixsocket-native-common</include>
+                                </includes>
+                            </artifactSet>
+                            <filters>
+                                <filter>
+                                    <artifact>com.kohlschutter.junixsocket:*</artifact>
+                                    <excludes>
+                                        <exclude>lib/**/*.dll</exclude>
+                                        <exclude>lib/**/*.nodeps.so</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
