@@ -479,7 +479,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.outputDirectory}/lib/aarch64-MacOSX-clang/jni</outputDirectory>
+                            <outputDirectory>${project.build.outputDirectory}/lib/</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/lib-signed/</directory>
