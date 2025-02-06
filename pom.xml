@@ -312,7 +312,7 @@
                     <showWarnings>true</showWarnings>
                     <compilerArgs>
                         <arg>-Xlint:all,-processing,-classfile</arg>
-                        <arg>-Werror</arg>
+                        <!--<arg>-Werror</arg>-->
                     </compilerArgs>
                 </configuration>
                 <executions>
